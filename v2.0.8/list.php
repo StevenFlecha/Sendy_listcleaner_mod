@@ -12,7 +12,20 @@
 		}
 	}
 ?>
-
+<link href="<?php echo get_app_info('path');?>/js/tablesorter/theme.default.min.css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo get_app_info('path');?>/js/tablesorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="<?php echo get_app_info('path');?>/js/tablesorter/jquery.tablesorter.widgets.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('table').tablesorter({
+            widgets        : ['saveSort'],
+            usNumberFormat : true,
+            sortReset      : true,
+            sortRestart    : true,
+            headers: { 0: { sorter: false}, 5: {sorter: false}, 6: {sorter: false} }    
+        });
+    });
+</script>
 <div class="row-fluid">
     <div class="span2">
         <?php include('includes/sidebar.php');?>
