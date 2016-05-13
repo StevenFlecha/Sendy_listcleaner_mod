@@ -1,6 +1,6 @@
 Sendy ListCleaner Mod v0.4
 
-For Sendy version 2.0.4
+For Sendy version 2.0.4 & 2.0.8
 
 ****DO NOT USE ON OTHER SENDY VERSIONS!!*****
 
@@ -30,3 +30,7 @@ RECOMMENDED USAGE SCENARIO
 
 
 by Flechamobile.com
+
+
+**** CHANGE LOG *****
+- Mod is now v2.0.8 compatible
