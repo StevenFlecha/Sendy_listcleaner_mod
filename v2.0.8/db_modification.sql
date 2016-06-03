@@ -6,13 +6,13 @@ CREATE TABLE IF NOT EXISTS `flecha_activity_log` (
   last_opened datetime default NULL,
   PRIMARY KEY (`id`),
   KEY `subid` (`subid`),
-  KEY `userID` (`userID`)
+  KEY `userID` (`ownerid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;		
 
 CREATE TABLE IF NOT EXISTS flecha_mods (
   id INT(11) NOT NULL AUTO_INCREMENT,
   modname VARCHAR(40) NOT NULL,
-  install_date datetime default NOW(),
+  install_date datetime default CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
