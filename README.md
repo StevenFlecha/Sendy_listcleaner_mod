@@ -1,6 +1,6 @@
-Sendy ListCleaner Mod v0.4
+Sendy ListCleaner Mod v0.4.2
 
-For Sendy version 2.0.4 & 2.0.8
+For Sendy version 2.0.4 & 2.0.8 & 2.1.2.7
 
 ****DO NOT USE ON OTHER SENDY VERSIONS!!*****
 
@@ -29,8 +29,12 @@ RECOMMENDED USAGE SCENARIO
 6. Optional delete the rest from the 'unactive' list to keep db clean and mean
 
 
-by Flechamobile.com
+by Steven van der Peijl - Flechamobile.com
 
 
 **** CHANGE LOG *****
+- Typo fix in a SQL query
+- Mod is now v2.1.2.7 compatible
+
+- Small fix in manual SQL table creation
 - Mod is now v2.0.8 compatible

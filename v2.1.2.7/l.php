@@ -43,12 +43,7 @@
 	$link_id = short($i_array[1], true);
 	$campaign_id = short($i_array[2], true);
 	
-    //echo "userid: $userID<br />";
-    //echo "linki: $link_id<br />";
-    //echo "Campaign id: $campaign_id";
-    
-    
-	//MOD EDIT BEGIN
+    //MOD EDIT BEGIN
 	$q = 'SELECT campaign_id,ares_emails_id	FROM links WHERE id = '.$link_id;
 	$r = mysqli_query($mysqli, $q);
 	$row = mysqli_fetch_array($r);
@@ -59,8 +54,7 @@
 		$row = mysqli_fetch_array($r);
 		$ownerid = $row['userID'];
 		$listids = $row['to_send_lists'];	
-	}
-    elseif(is_numeric($row['ares_emails_id'])){
+	}elseif(is_numeric($row['ares_emails_id'])){
 		//damn its a autoresponder mail click
 		$q = 'SELECT l.userID, l.id FROM lists AS l
 			LEFT JOIN ares ON ares.list = l.id 
@@ -73,8 +67,6 @@
 		//should not happen
 	}
 	
-    
-    
 	if(strpos($listids,',') !== false){
 		//multiple list - again nicely stored in sendy db /sarcasm
 		$listsidsarr = explode(',',$listids);
@@ -110,7 +102,7 @@
 	}
 	//MOD EDIT END
 	
-	//continue to normal weirdness...
+	//continue to normal weirdness...    
 	$q = 'SELECT clicks, link, ares_emails_id FROM links WHERE id = '.$link_id;
 	$r = mysqli_query($mysqli, $q);
 	if ($r && mysqli_num_rows($r) > 0)
@@ -134,7 +126,7 @@
 	//Set click
 	$q2 = 'UPDATE links SET clicks = "'.$val.'" WHERE id = '.$link_id;
 	$r2 = mysqli_query($mysqli, $q2);
-	//if ($r2){}
+	if ($r2){}
 	
 	//Set open
 	$q = $ares_emails_id=='' ? 'SELECT opens FROM campaigns WHERE id = '.$campaign_id : 'SELECT opens FROM ares_emails WHERE id = '.$campaign_id;
@@ -154,14 +146,11 @@
 			}
 	    }  
 	}
-	
-	
 	if(!$opened) 
 	{
 		if($ares_emails_id=='') file_get_contents_curl(APP_PATH.'/t/'.$i_array[2].'/'.$i_array[0]);
 		else file_get_contents_curl(APP_PATH.'/t/'.$i_array[2].'/'.$i_array[0].'/a');
 	}
-    
 	function file_get_contents_curl($url) 
 	{
 		$ch = curl_init();
@@ -190,33 +179,16 @@
 			$list_id = $row['list'];
 			$custom_values = $row['custom_fields'];
 	    }  
-	}
-    
-    //echo "<br /><pre>";
-    //print_r($custom_values);
-    //echo "</pre><br />";
-    
-    //echo "Link: $link<br />";
-    //$link = "http://[username,fallback=].serplease.com/training/youtube-rankings";
+	}	
 	preg_match_all('/\[([a-zA-Z0-9!#%^&*()+=$@._\-\:|\/?<>~`"\'\s]+),\s*fallback=/i', $link, $matches_var, PREG_PATTERN_ORDER);
 	preg_match_all('/,\s*fallback=([a-zA-Z0-9!,#%^&*()+=$@._\-\:|\/?<>~`"\'\s]*)\]/i', $link, $matches_val, PREG_PATTERN_ORDER);
 	preg_match_all('/(\[[a-zA-Z0-9!#%^&*()+=$@._\-\:|\/?<>~`"\'\s]+,\s*fallback=[a-zA-Z0-9!,#%^&*()+=$@._\-\:|\/?<>~`"\'\s]*\])/i', $link, $matches_all, PREG_PATTERN_ORDER);
+	preg_match_all('/\[([^\]]+),\s*fallback=/i', $link, $matches_var, PREG_PATTERN_ORDER);
+	preg_match_all('/,\s*fallback=([^\]]*)\]/i', $link, $matches_val, PREG_PATTERN_ORDER);
+	preg_match_all('/(\[[^\]]+,\s*fallback=[^\]]*\])/i', $link, $matches_all, PREG_PATTERN_ORDER);
 	$matches_var = $matches_var[1];
 	$matches_val = $matches_val[1];
 	$matches_all = $matches_all[1];
-    
-    /*
-    echo "<br /><pre>";
-    print_r($matches_var);
-    echo "</pre><br />";
-    echo "<br /><pre>";
-    print_r($matches_val);
-    echo "</pre><br />";
-    echo "<br /><pre>";
-    print_r($matches_all);
-    echo "</pre><br />";  
-    */
-              
 	for($i=0;$i<count($matches_var);$i++)
 	{   
 		$field = $matches_var[$i];
@@ -295,9 +267,7 @@
 		$link = str_replace('[unsubscribe]', APP_PATH.'/unsubscribe/'.short($email).'/'.short($list_id).'/'.short($campaign_id).'/a', $link);
 	}
 	
-	//redirect to link
-	$link = substr($link, 0, 4) != 'http' ? 'http://'.$link : $link;
-	//echo "<br />link: $link";
-    //exit;
+	//redirect to link	
+    $link = substr($link, 0, 4) != 'http' ? 'http://'.$link : $link;
     header("Location: $link");
 ?>
